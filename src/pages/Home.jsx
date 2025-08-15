@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Layout } from "../components/Layout"
 import { useAuth } from "../context/UserContext"
+import "../styles/pages/Home.css";
 
 const Home = () => {
   const [products, setProducts] = useState([])
+  const [q, setQ] = useState("");
   const [showPopup, setShowPopup] = useState(null)
   const [productToEdit, setProductToEdit] = useState(null)
   const [titleEdit, setTitleEdit] = useState("")
@@ -83,6 +85,15 @@ const Home = () => {
     }
   }
 
+  const filteredProducts = useMemo(() => {
+    const term = q.trim().toLowerCase();
+    if (!term) return products;
+    return products.filter(p =>
+      p.title.toLowerCase().incluides(term) ||
+      p.category.toLowerCase().incluides(term)
+    );
+  }, [q, products])
+
   return (
     <Layout>
       <section>
@@ -103,21 +114,36 @@ const Home = () => {
           </li>
           <li>
             <h3>Atención personalizada</h3>
-            <p>Estamos disponibles para ayudarte en todo momento.</p>
+            <p>Estamos disponibles para ayudarte y asesorarte las 24/7.</p>
           </li>
         </ul>
       </section>
 
       <section>
-        <h2>Nuestros productos</h2>
-        <p>Elegí entre nuestras categorías más populares.</p>
+        <div className="home__header">
+          <h2>Nuestros productos</h2>
+          <input 
+          className="home__search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          type="text" 
+          placeholder="Buscar (ej: proce, mother, ram)...."
+          aria-label="Buscar productos"
+          />
+        </div>
+        
 
 
-        {
-          showPopup && <section className="popup-edit">
-            <h2>Editando producto.</h2>
+        
+          {showPopup && ( 
+          <section className="popup-edit">
+            <div className="popup-edit__dialog">
+              <header className="popup-edit__header">
+                <h2>Editando producto.</h2>
             <button onClick={() => setShowPopup(null)}>Cerrar</button>
-            <form onSubmit={handleUpdate}>
+              </header>
+
+              <form onSubmit={handleUpdate}>
               <input
                 type="text"
                 placeholder="Ingrese el titulo"
@@ -147,31 +173,41 @@ const Home = () => {
                 value={imageEdit}
                 onChange={(e) => setImageEdit(e.target.value)}
               />
-              <button>Actualizar</button>
+              <button className="btn">Actualizar</button>
             </form>
+            </div>
           </section>
-        }
+  )}
 
-        <div>
-          {
-            products.map((product) => <div key={product.id}>
-              <h2 key={product.id}>{product.title}</h2>
-              <img width="80px" src={product.image} alt={`Imagen de ${product.title}`} />
-              <p>${product.price}</p>
-              <p>{product.description}</p>
-              <p><strong>{product.category}</strong></p>
-              {
-                user && <div>
-                  <button onClick={() => handleOpenEdit(product)}>Actualizar</button>
-                  <button onClick={() => handleDelete(product.id)}>Borrar</button>
+    {filteredProducts.length === 0 ? (
+          <p className="home__empty">No se encontraron productos.</p>
+        ) : (
+          <div className="grid">
+            {filteredProducts.map((product) => (
+              <article key={product.id} className="card">
+                <img src={product.image} alt={`Imagen de ${product.title}`} loading="lazy" />
+                <div className="card__body">
+                  <h3 className="card__title">{product.title}</h3>
+                  <p className="card__price">
+                    ${Number(product.price).toLocaleString("es-AR", { maximumFractionDigits: 2 })}
+                  </p>
+                  <p className="card__desc">{product.description}</p>
+                  <p className="card__cat"><strong>{product.category}</strong></p>
+
+                  {user && (
+                    <div className="card__actions">
+                      <button className="btn" onClick={() => handleOpenEdit(product)}>Actualizar</button>
+                      <button className="btn btn--danger" onClick={() => handleDelete(product.id)}>Borrar</button>
+                    </div>
+                  )}
                 </div>
-              }
-            </div>)
-          }
-        </div>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
     </Layout>
-  )
-}
+  );
+};
 
 export { Home }

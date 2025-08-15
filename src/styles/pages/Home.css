@@ -1,0 +1,92 @@
+:root{
+  --brand-700: #2563eb;   
+  --accent-500: #f59e0b;  
+  --bg-50:    #f9fafb;    
+  --text-900: #0f172a;    
+}
+
+html,body{ background: var(--bg-50); color: var(--text-900); }
+
+
+.home__header{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:12px;
+  justify-content:space-between;
+  margin:8px 0 16px;
+}
+
+.home__search{
+  flex:1 1 280px;
+  max-width:420px;
+  padding:10px 12px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  outline:none;
+}
+.home__search:focus{box-shadow:0 0 0 4px var(--ring);border-color:var(--brand)}
+
+.home__empty{ color:var(--muted); margin:8px 0; }
+
+/* GRID */
+.grid{
+  display:grid;
+  gap:16px;
+  grid-template-columns: repeat(1, minmax(0,1fr));
+}
+
+/* ≥480px */
+@media (min-width:480px){
+  .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+/* ≥880px */
+@media (min-width:880px){
+  .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+
+.card{
+  background:var(--card);
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.card img{ width:100%; aspect-ratio:1/1; object-fit:cover; }
+.card__body{ padding:12px; display:flex; flex-direction:column; gap:8px; }
+.card__title{ margin:0; font-weight:600; }
+.card__price{ color:var(--brand); margin:0; }
+.card__desc{ color:var(--fg); max-height:4.5em; overflow:hidden; }
+.card__cat{ color:var(--muted); margin:0; }
+.card__actions{ display:flex; gap:8px; margin-top:6px; }
+
+.btn{
+  background:var(--brand);
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+}
+.btn--danger{ background:#dc2626; }
+.btn--ghost{ background:transparent; color:var(--fg); border:1px solid #e5e7eb; }
+
+/* POPUP EDIT */
+.popup-edit{
+  position:fixed; inset:0; display:grid; place-items:center;
+  background:rgba(0,0,0,.5); padding:16px; z-index:50;
+}
+.popup-edit__dialog{
+  width:min(680px, 100%);
+  background:#fff; border-radius:14px; padding:16px;
+}
+.popup-edit__header{
+  display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;
+}
+.form{ display:grid; gap:10px; }
+.form input, .form textarea{
+  width:100%; padding:10px 12px; border:1px solid #e5e7eb; border-radius:10px;
+}
+.form textarea{ min-height:100px; resize:vertical; }

@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 import { useAuth } from "../context/UserContext"
+import logo from "../assets/imagentpfinl.png";
+
 
 const Header = () => {
   const { user, logout } = useAuth()
@@ -10,7 +12,7 @@ const Header = () => {
 
   return (
     <header style={{ backgroundColor: "lightblue" }}>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/Logo-Test.png" alt="imagen de logo" />
+      <img src="{logo}" alt="Compra Gamer" />
       <nav>
         <ul>
           {/* Cambiar elementos a por componentes Link de react-router-dom */}
