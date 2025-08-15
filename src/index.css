@@ -20,3 +20,24 @@ textarea {
   display: block;
   padding: 5px;
 }
+
+:root{
+  --brand-700:#2563eb; 
+  --accent-500:#f59e0b;
+  --bg-50:#f9fafb; 
+  --text-900:#0f172a; 
+  --muted:#6b7280;
+  --card:#ffffff; 
+  --ring:#2563eb33;
+}
+:root.dark,[data-theme="dark"]{
+  --bg-50:#0b1220; 
+  --text-900:#e5e7eb; 
+  --muted:#94a3b8;
+  --card:#0f172a;
+}
+
+html,body { 
+  background:var(--bg-50); 
+  color:var(--text-900); 
+}

@@ -14,7 +14,7 @@ const Home = () => {
   const [categoryEdit, setCategoryEdit] = useState("")
   const [imageEdit, setImageEdit] = useState("")
 
-  // simulando existencia del usuario, proximamente este estado será global
+  
   const { user } = useAuth()
 
   const fetchingProducts = async () => {
@@ -23,7 +23,7 @@ const Home = () => {
     setProducts(data)
   }
 
-  // El array vacío (dependencias) espera a que ejecute el return del jsx. Si tiene algo, useEffect se va a ejecutar cada vez que se modifique lo que este dentro de la dependencia.
+ 
   useEffect(() => {
     fetchingProducts()
   }, [])
@@ -33,7 +33,7 @@ const Home = () => {
 
     if (response.ok) {
       setProducts(prevProduct => prevProduct.filter((product) => product.id != id))
-      // fetchingProducts()
+      
     }
   }
 
@@ -47,7 +47,7 @@ const Home = () => {
     setImageEdit(product.image)
   }
 
-  // petición al backend mediante fetch para modificar-> método PATCH / PUT https://fakeproductapi.com/products
+  
   const handleUpdate = async (e) => {
     e.preventDefault()
 
@@ -77,7 +77,7 @@ const Home = () => {
               ? data
               : product
           ))
-        // fetchingProducts()
+        
       }
       setShowPopup(false)
     } catch (error) {
