@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
-import "../styles/pages/About.css";
+import "../styles/pages/About.css"
 
 const About = () => {
   return (
     <Layout>
-      {/* Hero */}
+ 
       <section className="about-hero">
         <h1>Quiénes somos</h1>
         <p>
@@ -16,7 +16,6 @@ const About = () => {
         </p>
       </section>
 
-      {/* Qué hacemos? */}
       <section className="about-features">
         <div className="feature card">
           <h3>Componentes de PC</h3>
@@ -60,7 +59,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Proceso */}
+
       <section className="about-process card">
         <h2>Cómo trabajamos</h2>
         <ol>
@@ -79,7 +78,40 @@ const About = () => {
         </ol>
       </section>
 
-      {/* Valores */}
+      <section className="about-required card">
+  <h2>Sobre este proyecto</h2>
+
+  <div className="about-required__grid">
+    <div>
+      <h3>¿De qué trata?</h3>
+      <p>
+        Es una tienda ficticia enfocada en componentes de PC: CPUs, GPUs, motherboards,
+        RAM, almacenamiento, fuentes, gabinetes y periféricos. Permite explorar,
+        buscar por nombre/categoría y simula acciones básicas de administración.
+      </p>
+    </div>
+
+    <div>
+      <h3>¿A quién está dirigido?</h3>
+      <p>
+        A entusiastas del hardware, jugadores y usuarios que desean armar o actualizar su
+        computadora, y a estudiantes que quieran ver un ejemplo de SPA con React.
+      </p>
+    </div>
+
+    <div>
+      <h3>Tecnologías y enfoques</h3>
+      <ul>
+        <li>React + Vite, Router, Context API (Auth, Theme, Cart)</li>
+        <li>Diseño responsive (breakpoints 480px / 880px)</li>
+        <li>Grid responsive y búsqueda parcial en vivo</li>
+        <li>Validaciones UX con mensajes y estados de carga</li>
+        <li>FakeStoreAPI: registro de usuarios (POST /users)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
       <section className="about-values">
         <div className="value card">
           <h3>Transparencia</h3>

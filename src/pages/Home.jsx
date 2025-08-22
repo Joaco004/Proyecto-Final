@@ -1,56 +1,46 @@
-import { useEffect, useMemo, useState } from "react"
-import { Layout } from "../components/Layout"
-import { useAuth } from "../context/UserContext"
+import { useEffect, useMemo, useState } from "react";
+import { Layout } from "../components/Layout";
+import { useAuth } from "../context/UserContext";
 import "../styles/pages/Home.css";
 
 const Home = () => {
-  const [products, setProducts] = useState([])
-  const [q, setQ] = useState("");
-  const [showPopup, setShowPopup] = useState(null)
-  const [productToEdit, setProductToEdit] = useState(null)
-  const [titleEdit, setTitleEdit] = useState("")
-  const [priceEdit, setPriceEdit] = useState("")
-  const [descriptionEdit, setDescriptionEdit] = useState("")
-  const [categoryEdit, setCategoryEdit] = useState("")
-  const [imageEdit, setImageEdit] = useState("")
+  const [products, setProducts] = useState([]);
+  const [q, setQ] = useState("");                  
+  const [showPopup, setShowPopup] = useState(null);
+  const [productToEdit, setProductToEdit] = useState(null);
+  const [titleEdit, setTitleEdit] = useState("");
+  const [priceEdit, setPriceEdit] = useState("");
+  const [descriptionEdit, setDescriptionEdit] = useState("");
+  const [categoryEdit, setCategoryEdit] = useState("");
+  const [imageEdit, setImageEdit] = useState("");
 
-  
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   const fetchingProducts = async () => {
-    const response = await fetch("https://fakestoreapi.com/products", { method: "GET" })
-    const data = await response.json()
-    setProducts(data)
-  }
+    const res = await fetch("https://fakestoreapi.com/products");
+    const data = await res.json();
+    setProducts(data);
+  };
 
- 
-  useEffect(() => {
-    fetchingProducts()
-  }, [])
+  useEffect(() => { fetchingProducts(); }, []);
 
   const handleDelete = async (id) => {
-    const response = await fetch(`https://fakestoreapi.com/products/${id}`, { method: "DELETE" })
-
-    if (response.ok) {
-      setProducts(prevProduct => prevProduct.filter((product) => product.id != id))
-      
-    }
-  }
+    const res = await fetch(`https://fakestoreapi.com/products/${id}`, { method: "DELETE" });
+    if (res.ok) setProducts(prev => prev.filter(p => p.id !== id));
+  };
 
   const handleOpenEdit = (product) => {
-    setShowPopup(true)
-    setProductToEdit(product)
-    setTitleEdit(product.title)
-    setPriceEdit(product.price)
-    setDescriptionEdit(product.description)
-    setCategoryEdit(product.category)
-    setImageEdit(product.image)
-  }
+    setShowPopup(true);
+    setProductToEdit(product);
+    setTitleEdit(product.title);
+    setPriceEdit(product.price);
+    setDescriptionEdit(product.description);
+    setCategoryEdit(product.category);
+    setImageEdit(product.image);
+  };
 
-  
   const handleUpdate = async (e) => {
-    e.preventDefault()
-
+    e.preventDefault();
     const updatedProduct = {
       id: productToEdit.id,
       title: titleEdit,
@@ -58,41 +48,30 @@ const Home = () => {
       description: descriptionEdit,
       category: categoryEdit,
       image: imageEdit
-    }
-
+    };
     try {
-      const response = await fetch(`https://fakestoreapi.com/products/${productToEdit.id}`, {
+      const res = await fetch(`https://fakestoreapi.com/products/${productToEdit.id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedProduct)
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        setProducts(prevProduct =>
-          prevProduct.map((product) =>
-            product.id === productToEdit.id
-              ? data
-              : product
-          ))
-        
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setProducts(prev => prev.map(p => p.id === productToEdit.id ? data : p));
       }
-      setShowPopup(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+      setShowPopup(false);
+    } catch (err) { console.log(err); }
+  };
+
 
   const filteredProducts = useMemo(() => {
     const term = q.trim().toLowerCase();
     if (!term) return products;
     return products.filter(p =>
-      p.title.toLowerCase().incluides(term) ||
-      p.category.toLowerCase().incluides(term)
+      p.title.toLowerCase().includes(term) ||
+      p.category.toLowerCase().includes(term)
     );
-  }, [q, products])
+  }, [q, products]);
 
   return (
     <Layout>
@@ -114,7 +93,7 @@ const Home = () => {
           </li>
           <li>
             <h3>Atención personalizada</h3>
-            <p>Estamos disponibles para ayudarte y asesorarte las 24/7.</p>
+            <p>Estamos disponibles para ayudarte en todo momento.</p>
           </li>
         </ul>
       </section>
@@ -122,64 +101,39 @@ const Home = () => {
       <section>
         <div className="home__header">
           <h2>Nuestros productos</h2>
-          <input 
-          className="home__search"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          type="text" 
-          placeholder="Buscar (ej: proce, mother, ram)...."
-          aria-label="Buscar productos"
+          <input
+            className="home__search"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            type="text"
+            placeholder="Buscar (ej: cam, zapatillas, men)..."
+            aria-label="Buscar productos"
           />
         </div>
-        
 
-
-        
-          {showPopup && ( 
+        {/* POPUP EDITAR */}
+        {showPopup && (
           <section className="popup-edit">
             <div className="popup-edit__dialog">
               <header className="popup-edit__header">
-                <h2>Editando producto.</h2>
-            <button onClick={() => setShowPopup(null)}>Cerrar</button>
+                <h3>Editando producto</h3>
+                <button onClick={() => setShowPopup(null)} className="btn btn--ghost">Cerrar</button>
               </header>
 
-              <form onSubmit={handleUpdate}>
-              <input
-                type="text"
-                placeholder="Ingrese el titulo"
-                value={titleEdit}
-                onChange={(e) => setTitleEdit(e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Ingrese el precio"
-                value={priceEdit}
-                onChange={(e) => setPriceEdit(e.target.value)}
-              />
-              <textarea
-                placeholder="Ingrese la descripción"
-                value={descriptionEdit}
-                onChange={(e) => setDescriptionEdit(e.target.value)}
-              ></textarea>
-              <input
-                type="text"
-                placeholder="Ingrese la categoria"
-                value={categoryEdit}
-                onChange={(e) => setCategoryEdit(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Ingrese la URL de la imagen"
-                value={imageEdit}
-                onChange={(e) => setImageEdit(e.target.value)}
-              />
-              <button className="btn">Actualizar</button>
-            </form>
+              <form onSubmit={handleUpdate} className="form">
+                <input type="text" placeholder="Título" value={titleEdit} onChange={(e) => setTitleEdit(e.target.value)} />
+                <input type="number" placeholder="Precio" value={priceEdit} onChange={(e) => setPriceEdit(e.target.value)} />
+                <textarea placeholder="Descripción" value={descriptionEdit} onChange={(e) => setDescriptionEdit(e.target.value)} />
+                <input type="text" placeholder="Categoría" value={categoryEdit} onChange={(e) => setCategoryEdit(e.target.value)} />
+                <input type="text" placeholder="URL imagen" value={imageEdit} onChange={(e) => setImageEdit(e.target.value)} />
+                <button className="btn">Actualizar</button>
+              </form>
             </div>
           </section>
-  )}
+        )}
 
-    {filteredProducts.length === 0 ? (
+        {/* GRID RESPONSIVE */}
+        {filteredProducts.length === 0 ? (
           <p className="home__empty">No se encontraron productos.</p>
         ) : (
           <div className="grid">
@@ -210,4 +164,7 @@ const Home = () => {
   );
 };
 
-export { Home }
+export { Home };
+
+
+

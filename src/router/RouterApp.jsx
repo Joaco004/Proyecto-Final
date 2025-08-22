@@ -6,6 +6,7 @@ import { Dashboard } from "../pages/Dashboard";
 import { Login } from "../pages/Login";
 import { Register } from "../pages/Register";
 import { NotFound } from "../pages/NotFound";
+import { About } from "../pages/About"
 
 import { PrivateRoute } from "../components/PrivateRoute";
 
@@ -14,14 +15,12 @@ function RouterApp() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/Sobre Nosotros" element={<About />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Registrate" element={<Register />} />
 
-        {/* auth */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/registrate" element={<Register />} />
-
-        {/* privada */}
         <Route
-          path="/dashboard"
+          path="/Dashboard"
           element={
             <PrivateRoute>
               <Dashboard />
@@ -29,7 +28,6 @@ function RouterApp() {
           }
         />
 
-        {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
