@@ -61,7 +61,7 @@ const About = () => {
 
 
       <section className="about-process card">
-        <h2>Cómo trabajamos</h2>
+          <h2>Cómo trabajamos</h2>
         <ol>
           <li>
             <strong>Asesoría personalizada:</strong> nos contás para qué la
