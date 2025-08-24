@@ -92,3 +92,13 @@
   .brand__logo{ height:30px; }
   .brand__name{ font-size:.95rem; }
 }
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+@media (max-width:880px){
+  .header-actions{ margin-left:auto; }
+}

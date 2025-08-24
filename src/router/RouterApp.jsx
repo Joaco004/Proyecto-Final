@@ -15,7 +15,7 @@ function RouterApp() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Sobre Nosotros" element={<About />} />
+        <Route path="/about" element={<About />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Registrate" element={<Register />} />
 

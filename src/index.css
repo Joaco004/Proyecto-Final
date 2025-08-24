@@ -1,43 +1,48 @@
-.red {
-  background-color: red;
-}
-
-.blue {
-  background-color: blue;
-}
-
-.error {
-  color: red;
-}
-
-.popup-edit {
-  background-color: yellowgreen;
-  padding: 20px;
-}
-
-input,
-textarea {
-  display: block;
-  padding: 5px;
-}
-
 :root{
-  --brand-700:#2563eb; 
+  --brand-700:#2563eb;
   --accent-500:#f59e0b;
-  --bg-50:#f9fafb; 
-  --text-900:#0f172a; 
+  --bg-50:#f9fafb;
+  --bg-tint:#eff6ff;         
+  --text-900:#0f172a;
   --muted:#6b7280;
-  --card:#ffffff; 
+  --card:#ffffff;
+  --card-border:#e5e7eb;
   --ring:#2563eb33;
 }
+
 :root.dark,[data-theme="dark"]{
-  --bg-50:#0b1220; 
-  --text-900:#e5e7eb; 
+  --bg-50:#0b1220;
+  --bg-tint:#0d1530;
+  --text-900:#e5e7eb;
   --muted:#94a3b8;
   --card:#0f172a;
+  --card-border:#1f2937;
 }
 
-html,body { 
-  background:var(--bg-50); 
-  color:var(--text-900); 
+html,body{
+  background:
+    linear-gradient(180deg, var(--bg-tint) 0%, var(--bg-50) 40%, var(--bg-50) 100%);
+  color: var(--text-900);
 }
+
+.card{
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(16,24,40,.04);
+}
+:root.dark .card,[data-theme="dark"] .card{
+  box-shadow: 0 1px 0 rgba(255,255,255,.03);
+}
+
+body::before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none;
+  background: radial-gradient(700px 400px at 10% -10%, rgba(245,158,11,.06), transparent 60%);
+}
+
+.red { background-color: red; }
+.blue { background-color: blue; }
+.error { color: red; }
+.popup-edit { background-color: yellowgreen; padding: 20px; }
+input, textarea { display: block; padding: 5px; }

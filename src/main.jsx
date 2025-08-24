@@ -4,12 +4,15 @@ import { RouterApp } from './router/RouterApp'
 
 import "./index.css"
 import { UserProvider } from './context/UserContext'
+import { ThemeProvider } from "./context/ThemeContext"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <UserProvider>
-      <RouterApp />
-    </UserProvider>
+   <ThemeProvider>
+     <UserProvider>
+       <RouterApp />
+     </UserProvider>
+   </ThemeProvider>
   </StrictMode>,
 )
 
