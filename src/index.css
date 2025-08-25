@@ -1,17 +1,19 @@
 :root{
   --brand-700:#2563eb;
   --accent-500:#f59e0b;
-  --bg-50:#f9fafb;
-  --bg-tint:#eff6ff;         
+  --bg-50:#f4f6fb;
+  --bg-tint:#eff6ff;
   --text-900:#0f172a;
   --muted:#6b7280;
-  --card:#ffffff;
-  --card-border:#e5e7eb;
+  --surface-1:#ffffff;         
+  --surface-2:#f7fafc;         
+  --card:#ffffff;               
+  --card-border:#e3e8ef;        
   --ring:#2563eb33;
 }
 
 :root.dark,[data-theme="dark"]{
-  --bg-50:#0b1220;
+  --bg:#0b1220;
   --bg-tint:#0d1530;
   --text-900:#e5e7eb;
   --muted:#94a3b8;
@@ -21,28 +23,124 @@
 
 html,body{
   background:
-    linear-gradient(180deg, var(--bg-tint) 0%, var(--bg-50) 40%, var(--bg-50) 100%);
+    radial-gradient(900px 480px at -10% -10%, rgba(37,99,235,.12), transparent 55%),
+    radial-gradient(800px 420px at 110% 0%, rgba(245,158,11,.10), transparent 60%),
+    linear-gradient(180deg, var(--bg-tint) 0%, var(--bg-50) 30%, #f9fafb 100%);
   color: var(--text-900);
 }
 
+:root.dark html,
+:root.dark body,
+[data-theme="dark"] body{
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(37,99,235,.15), transparent 60%),
+    radial-gradient(800px 400px at 10% 110%, rgba(245,158,11,.08), transparent 60%),
+    linear-gradient(180deg, var(--bg-tint) 0%, var(--bg) 60%, var(--bg) 100%);
+  color: var(--text-900);
+}
+
+
 .card{
+  background: linear-gradient(180deg, var(--surface-1) 0%, #f8fafc 100%);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(37,99,235,.05), 0 1px 0 rgba(16,24,40,.04);
+}
+
+:root.dark .card,[data-theme="dark"] .card{
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: 14px;
-  box-shadow: 0 1px 0 rgba(16,24,40,.04);
-}
-:root.dark .card,[data-theme="dark"] .card{
-  box-shadow: 0 1px 0 rgba(255,255,255,.03);
+  box-shadow: 0 6px 24px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.02);
 }
 
-body::before{
-  content:"";
-  position:fixed; inset:0; pointer-events:none;
-  background: radial-gradient(700px 400px at 10% -10%, rgba(245,158,11,.06), transparent 60%);
+.home__header,
+.about-hero,
+.nf__card,
+.form-card,
+.card.created{
+  background: var(--surface-2);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
 }
+
+input, textarea, select{
+  display:block;
+  padding:5px;
+  background:#f8fafc;
+  border:1px solid var(--card-border);
+  border-radius:10px;
+}
+input:focus, textarea:focus, select:focus{
+  box-shadow:0 0 0 4px var(--ring);
+  border-color: var(--brand-700);
+}
+
+:root.dark :is(input,textarea,select):focus,
+[data-theme="dark"] :is(input,textarea,select):focus{
+  box-shadow: 0 0 0 4px rgba(37,99,235,.25);
+  border-color: var(--brand-700);
+}
+
+.btn{ background:#2563eb; color:#fff; border:none; border-radius:10px; }
+.btn--ghost{
+  background: rgba(37,99,235,.06);
+  border: 1px solid var(--card-border);
+}
+
+a:hover{ color:#2563eb; }
 
 .red { background-color: red; }
 .blue { background-color: blue; }
 .error { color: red; }
 .popup-edit { background-color: yellowgreen; padding: 20px; }
-input, textarea { display: block; padding: 5px; }
+:root.dark html,
+:root.dark body,
+[data-theme="dark"] body{
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(37,99,235,.10), transparent 60%),
+    radial-gradient(800px 400px at 10% 110%, rgba(245,158,11,.05), transparent 60%),
+    linear-gradient(180deg, var(--bg-tint) 0%, var(--bg) 75%, var(--bg) 100%);
+}
+
+:root.dark .about-hero,
+:root.dark .home__header,
+:root.dark .form-card,
+:root.dark .nf__card,
+:root.dark .card.created,
+[data-theme="dark"] .about-hero,
+[data-theme="dark"] .home__header,
+[data-theme="dark"] .form-card,
+[data-theme="dark"] .nf__card,
+[data-theme="dark"] .card.created{
+  background: var(--card);
+  border-color: var(--card-border);
+}
+
+:root.dark :is(input,textarea,select),
+[data-theme="dark"] :is(input,textarea,select){
+  background:#0e1726;               
+  border:1px solid #223046;        
+  color: var(--text-900);
+}
+:root.dark :is(input,textarea,select)::placeholder,
+[data-theme="dark"] :is(input,textarea,select)::placeholder{
+  color:#64748b;
+}
+:root.dark :is(input,textarea,select):focus,
+[data-theme="dark"] :is(input,textarea,select):focus{
+  border-color: var(--brand-700);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.25);
+}
+
+:root.dark .card,
+[data-theme="dark"] .card{
+  border-color: var(--card-border);
+  box-shadow: 0 8px 28px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.02);
+}
+
+:root.dark .nav.open .nav__list,
+[data-theme="dark"] .nav.open .nav__list{
+  background: var(--card);
+  border:1px solid var(--card-border);
+}
