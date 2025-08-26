@@ -1,16 +1,14 @@
-import { Footer } from "./Footer"
-import { Header } from "./Header"
+import { Footer } from "./Footer";
+import { Header } from "./Header";
 
-const Layout = (props) => {
+const Layout = ({ children, background }) => {
   return (
-    <div className={props.background}>
+    <div className={`site ${background || ""}`}>
       <Header />
-      <main>
-        {props.children}
-      </main>
+      <main className="site__main">{children}</main>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export { Layout }
+export { Layout };
